@@ -1,0 +1,139 @@
+
+#ifndef __DMXOUT__H
+#define __DMXOUT__H
+
+#include "ArtNetType.h"
+
+typedef struct DMXList*pDMXList;
+
+#define  DMXOUT_NAMESIZE	18
+#define  DMXOUT_DEBUG			1
+
+typedef union  UnionNode*pUnionNode;
+typedef struct  Array*    pArray;
+typedef Int16   (*GetNodeData)(pArray array,pUnionNode pNode,Int16 len,Int8*pDest);
+
+typedef struct NodeMsg{
+	
+	const char*NodeName;
+	Int8 			IPAddress[4];															// ip地址
+	Int8			Net;
+	Int8			SubUni;
+	Int8      Sequence;
+  Int8      isExit;		  															// 用于标记是否已经被登记过
+	
+}NodeMsg;
+
+typedef struct LineNode{
+		
+	struct LineNode*pNext;
+	NodeMsg   	msg;
+	
+	
+	GetNodeData func;																		// 创建的时候必须指定是哪个类型
+	Int16  	  	len;
+	DATATYPE  	type;
+	
+	Int16				spare0;
+	Int16				spare1;
+	void*				spare3;
+	
+	DataType* 	Data;
+}LineNode,*pLineNode;
+
+typedef struct ArrayNode{
+	struct ArrayNode*pNext;
+	
+	NodeMsg  	 	msg;
+	
+	
+	GetNodeData func;																		// 创建的时候必须指定是哪个类型
+	Int16       len;
+	DATATYPE		type;																		// 运算的时候，同意用RGB或RGBW运算
+	
+	Int16     	width;
+	Int16 			heigh;
+	
+	
+	DataType* 	Src;																		// 矩阵数据指向同一个起始地址
+	DataType*	  Data;																		// Src + offset; offset是计算出来的
+	
+}ArrayNode,*pArrayNode;
+
+typedef union  UnionNode{														  // 用于存放数据链表
+	
+	LineNode  	lineNode;
+	ArrayNode 	arrayNode;
+}UnionNode,*pUnionNode;
+
+// 每一个IP都要专门创建一个
+typedef struct NodeList{
+	
+	struct 		NodeList*pNext;
+
+	ARTNETMODE  mode;
+	UnionNode*	pHead;
+	UnionNode*	pTail;
+	
+	pArray		  parray;
+}NodeList,*pNodeList;
+
+typedef struct ArtNetConfig{
+	Int8				nodeID;								// 是否为新的一个节点,ID相同，作为同一个类型的节点,用于合并成为Array进行运算
+	char* 			IPAddress;						// 
+	char*       shortName;						// 短地址
+	
+	ARTNETMODE 	mode;									// Belong to ARTNETMODE_ARRAY OR ARTNETMODE_LINE
+	Int8  			subUni;
+	Int16   		length;
+	DATATYPE  	type;									// DATATYPE_RGB OR OTHRER
+	
+	Int16   		width;
+	Int16   		heigh;
+	
+	ARRAYMODE 	arrayMode;						// 
+	Int16       xStart;
+	Int16       yStart;
+	GetNodeData getNodeData; 
+	
+}ArtNetConfig,*pArtNetConfig;
+
+//typedef struct ArtNetConfig{				// 配置列表
+//	
+//	char*  			longName;
+//	ARTNETMODE 	mode;									// Belong to ARTNETMODE_ARRAY OR ARTNETMODE_LINE
+//	Int8  			subUni;
+//	Int16   		length;
+//	DATATYPE  	type;									// DATATYPE_RGB OR OTHRER
+//	
+//	Int16   		width;
+//	Int16   		heigh;
+//	
+//	ARRAYMODE 	arrayMode;						// 
+//	Int16       xStart;
+//	Int16       yStart;
+//	GetNodeData  getNodeData;
+//}ArtNetConfig,*pArtNetConfig;
+
+typedef struct Array{								// 单纯用于计算的数组空间
+
+	Int16				width;
+	Int16				heigh;
+	DATATYPE		type;
+	
+	DataType*   array;								// 一维数组也可以访问二维数组表
+}Array,*pArray;
+
+
+void   				initArtNetConfig(void);
+pArtNetConfig getArtNetConfig(int*size);
+void          registerNodeList(pArtNode  node);												// 在发现设备的时候需要进行登记
+pNodeList     getNodeListHead(void);
+
+pArray				createArray(Int16 width,Int16 height,DATATYPE datatype);// 仅仅用于测试
+pArray  			getArrayIndex(Int8 index);
+
+
+
+#endif
+

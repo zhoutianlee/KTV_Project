@@ -1,0 +1,12 @@
+..\..\output\model_normal.o: ..\..\ArtNet\Model_Normal.c
+..\..\output\model_normal.o: ..\..\ArtNet\Model_Normal.h
+..\..\output\model_normal.o: ..\..\ArtNet\Model.h
+..\..\output\model_normal.o: ..\..\ArtNet\DmxOut.h
+..\..\output\model_normal.o: ..\..\ArtNet\ArtNetType.h
+..\..\output\model_normal.o: ..\..\ArtNet\ArtMem.h
+..\..\output\model_normal.o: ..\..\ArtNet\Display.h
+..\..\output\model_normal.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\output\model_normal.o: ..\..\ArtNet\Model_Normal_Soft.h
+..\..\output\model_normal.o: ..\..\ArtNet\Model_Normal_Breath.h
+..\..\output\model_normal.o: ..\..\ArtNet\Model_Normal_Romatic.h
+..\..\output\model_normal.o: ..\..\ArtNet\Model_Normal_HeartBeat.h

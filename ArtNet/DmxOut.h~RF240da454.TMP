@@ -1,0 +1,37 @@
+
+#ifndef __DMXOUT__H
+#define __DMXOUT__H
+
+#include "ArtNetType.h"
+#include "Display.h"
+
+
+#define  DMXOUT_NAMESIZE	18
+#define  DMXOUT_DEBUG			1
+
+
+
+typedef struct ArrayRGB{
+	
+}ArrayRGB,*pArrayRGB;
+
+typedef struct DMXOut{
+
+	Int8				Net;
+	Int8 				SubUni;
+	Int8				Sequence;
+	
+	Point				node;									// 分配到的数据空间
+	pArray			array;
+}DMXOut,*pDmxOut;
+
+typedef struct DMXList{
+	struct DMXList*pNext;
+	DMXOut				 object;						// dmx数据域
+}DMXList,*pDMXList;
+
+pArray				createArray(const char*Name,Int16 width,Int16 height,DataType);
+pDMXList			createDMXList(Int8 Net,Int8	SubUni,Int8 Sequence,Int16 width,Int16 height);
+char					addArrayNode(pArray array,)
+#endif
+

@@ -1,0 +1,27 @@
+
+
+#ifndef __BSP_TIME__H
+#define __BSP_TIME__H
+
+#include "stdlib.h"
+
+#define GENERAL_TIM           		TIM5
+#define GENERAL_TIM_CLK       		RCC_APB1Periph_TIM5
+
+#define GENERAL_TIM_IRQn					TIM5_IRQn
+#define GENERAL_TIM_IRQHandler    TIM5_IRQHandler
+
+typedef void (*timeCB)(unsigned long id);
+
+typedef void* TimeHandle;
+
+void       		initTimeUp(int usTick);
+unsigned long getTimeTick(unsigned long sec,unsigned long ms,unsigned long us);
+TimeHandle*		createTime(char reload,unsigned long id,unsigned long tick,timeCB func);
+TimeHandle*   createTimeSec(char reload, unsigned long id,unsigned long sec,timeCB func);
+TimeHandle*   createTimeMSec(char reload, unsigned long id,unsigned long msec,timeCB func);
+void          startTime(void*timeHandle);
+char       		closeTime(TimeHandle*time);
+void          modifyTime(void*timeHandle,unsigned long tick);
+
+#endif

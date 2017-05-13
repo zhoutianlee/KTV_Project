@@ -1,0 +1,27 @@
+
+
+#ifndef __HAL__TIME__H
+#define __HAL__TIME__H
+
+#include "stdlib.h"
+
+#define GENERAL_TIM           		TIM2
+#define GENERAL_TIM_CLK       		RCC_APB1Periph_TIM2
+
+#define GENERAL_TIM_IRQn					TIM2_IRQn
+#define GENERAL_TIM_IRQHandler    TIM2_IRQHandler
+
+typedef void(*timerCB)(void);
+
+typedef struct ITimer{
+
+	void (*initTimer) (int usTick);
+	void (*startTimer)(int secTick,int msTick,int usTick,timerCB func);
+	void (*startTimeSec)(int secTick,int usTick,timerCB func);
+	void (*endTimer)  (void);
+	
+}ITimer,*pITimer;
+
+pITimer getTimerHandle(void);
+
+#endif

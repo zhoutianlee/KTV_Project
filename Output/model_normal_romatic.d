@@ -1,0 +1,9 @@
+..\..\output\model_normal_romatic.o: ..\..\ArtNet\Model_Normal_Romatic.c
+..\..\output\model_normal_romatic.o: ..\..\ArtNet\Model_Normal_Romatic.h
+..\..\output\model_normal_romatic.o: ..\..\ArtNet\Model.h
+..\..\output\model_normal_romatic.o: ..\..\ArtNet\DmxOut.h
+..\..\output\model_normal_romatic.o: ..\..\ArtNet\ArtNetType.h
+..\..\output\model_normal_romatic.o: ..\..\ArtNet\ArtMem.h
+..\..\output\model_normal_romatic.o: ..\..\ArtNet\Display.h
+..\..\output\model_normal_romatic.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\output\model_normal_romatic.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

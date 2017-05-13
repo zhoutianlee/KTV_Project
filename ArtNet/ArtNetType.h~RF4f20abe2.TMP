@@ -1,0 +1,216 @@
+
+
+#ifndef __ARTNETTYPE__H
+#define __ARTNETTYPE__H
+
+#include "ArtMem.h"
+
+#define ARTNET_MAX_PORTS			4
+#define ARTNET_DEBUG					0
+#define ARTNET_STRING					"Art-Net"
+
+#define ARTNET_FREQFLASH					20									// 数据刷新速率
+#define ARTNET_BUFMAX							550
+
+typedef unsigned char  Int8;
+typedef unsigned short Int16;
+typedef unsigned long  Int32;
+
+typedef enum OpCodes{
+	OpPoll 							= 0x2000,
+	OpPollReply 				= 0x2100,
+	OpDiagData 					= 0x2300,
+	OpCommand 					= 0x2400,
+	OpOutput 						= 0x5000,
+	OpDmx 							= 0x5000,
+	OpNzs 							= 0x5100,
+	OpSync 							= 0x5200,
+	OpAddress 					= 0x6000,
+	OpInput 						= 0x7000,
+	OpTodReques 				= 0x8000,
+	OpTodData 					= 0x8100,
+	OpTodControl 				= 0x8200,
+	OpRdm 							= 0x8300,
+	OpRdmSub 						= 0x8400,
+	OpVideoSetup 				= 0xa010,
+	OpVideoPalette 			= 0xa020,
+	OpVideoData 				= 0xa040,
+	OpMacMaster 				= 0xf000,
+	OpMacSlave 					= 0xf100,
+	OpFirmwareMaster 		= 0xf200,
+	OpFirmwareReply 		= 0xf300,
+	OpFileTnMaster 			= 0xf400,
+	OpFileFnMaster 			= 0xf500,
+	OpFileFnReply 			= 0xf600,
+	OpIpProg 						= 0xf800,
+	OpIpProgReply				= 0xf900,
+	OpMedia 						= 0x9000,
+	OpMediaPath 				= 0x9100,
+	OpMediaControl 			= 0x9200,
+	OpMediaControlReply = 0x9300,
+	OpTimeCode 					= 0x9700,
+	OpTimeSync 					= 0x9800,
+	OpTrigger 					= 0x9900,
+	OpDirectory 				= 0x9a00,
+	OpDirectoryReply 		= 0x9b00
+	
+}OpCodes;
+
+typedef enum NodeReportCodes{
+	RcDebug 				= 0,
+	RcPowerOk 			= 1,
+	RcPowerFail 		= 2,
+	RcSocketWr1 		= 3,
+	RcParseFail 		= 4,
+	RcUdpFail 			= 5,
+	RcShNameOk			= 6,
+	RcLoNameOk			= 7,
+	RcDmxError			= 8,
+	RcDmxUdpFull		= 9,
+	RcDmxRxFull 		= 10,
+	RcWsitchErr			= 11,
+	RcConfigErr 		= 12,
+	RcDmxShort 			= 13,
+	RcFirmwareFail 	= 14,
+	RcUserFail			= 15,
+	RcFactoryRes 		= 16
+}NodeReportCodes;
+
+typedef enum {
+  ARTNET_OFF,
+  ARTNET_STANDBY,
+  ARTNET_ON
+} NodeStatus;
+
+
+typedef enum StyleCodes{
+	StNode 				= 0x00,
+	StController 	= 0x01,
+	StMedia 			= 0x02,
+	StRoute 			= 0x03,
+	StBackup 			= 0x04,
+	StConfig 			= 0x05,
+	StVisual 			= 0x06
+}StyleCodes;
+
+typedef struct ArtNode{
+	Int8  			IPAddress[4];
+	Int16 			Port;
+	Int8  			VersInfoH;
+	Int8  			VersInfoL;
+	Int8  			NetSwitch;
+	Int8  			SubSwitch;
+	Int8  			OemHi;
+	Int8  			Oem;
+	Int8  			UbeaVersion;
+	Int8  			Status1;
+	Int8  			EstaManLo;
+	Int8  			EstaManHi;
+	Int8  			ShortName[18];
+	Int8  			LongName[64];
+	Int8  			NodeReport[64];
+	Int8  			NumPortsHi;
+	Int8  			NumPortsLo;
+	Int8  			PortTypes [4];
+	Int8  			GoodInput[4];
+	Int8  			GoodOutput[4];
+	Int8  			SwIn[4];
+	Int8  			SwOut[4];
+	Int8  			SwVideo;
+	Int8  			SwMacro;
+	Int8  			SwRemote;
+	Int8  			Spare[3];
+	Int8  			Style;
+	Int8  			MAC[6];
+	Int8  			BindIp[4];
+	Int8  			BindIndex;
+	Int8  			Status2;
+}ArtNode,*pArtNode;
+
+typedef enum	 DATATYPE{
+
+	DATATYPE_RGBW	= 0,
+	DATATYPE_RGB	=	1,
+	DATATYPE_GRB	= 2,
+	DATATYPE_RBG	= 3,
+	DATATYPE_GBR	= 4
+}DATATYPE;
+
+typedef enum   ARTNETMODE{
+	ARTNETMODE_ARRAY 	= 0,
+	ARTNETMODE_LINE		= 1
+}ARTNETMODE;
+typedef enum   ARRAYMODE{
+	/*
+				1  2  3  4
+				8	 7	6	 5
+				9 10 11 12
+	 */
+	
+	ARRAYMODE_1		= 0,
+	/*
+				1  2  3  4
+				5  6  7  8 
+				9  10 11 12
+	 */
+	ARRAYMODE_2		= 1,
+	/*
+				1  6  7  12
+				2  5  8  11
+				3  4  9  10
+	 */
+	ARRAYMODE_3		= 2,
+	/*
+				1  4  7  10
+				2  5  8  11
+				3  6  9  12
+	 */
+	ARRAYMODE_4		= 3
+	
+}ARRAYMODE;
+
+typedef struct RGB{
+
+	Int8  	red;
+	Int8  	green;
+	Int8		blue;
+}RGB,*pRGB;
+
+typedef struct RGBW{
+	
+	Int8  	red;
+	Int8  	green;
+	Int8		blue;
+	Int8		white;
+	
+}RGBW,*pRGBW;
+
+typedef struct GRB{
+	Int8		green;
+	Int8		red;
+	Int8		white;
+}GRB,*pGRB;
+
+typedef struct Point{
+	Int16		width;
+	Int16 	heigh;
+}Point,*pPoint;
+
+typedef union  DataType{
+	
+	RGB			rgb;
+	RGBW		rgbw;
+}DataType;
+
+
+typedef struct ArtNodeList{
+	
+	struct ArtNodeList*pNext;
+	ArtNode			 node;
+	
+}ArtNodeList,*pArtNodeList;
+
+extern pHandle artMemHandle;
+extern pHandle timeMemHandle;
+
+#endif

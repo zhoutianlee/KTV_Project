@@ -1,0 +1,121 @@
+
+#ifndef __DMXOUT__H
+#define __DMXOUT__H
+
+#include "ArtNetType.h"
+
+typedef struct DMXList*pDMXList;
+
+#define  DMXOUT_NAMESIZE	18
+#define  DMXOUT_DEBUG			1
+
+//  NodeList -> NodeList->NodeList
+//     |					|
+//		Node				
+//     |    
+//     V
+//    Node
+//     |
+//     v
+//    NULL
+
+typedef union  UnionNode*pUnionNode;
+typedef struct  Array*    pArray;
+typedef Int16   (*GetNodeData)(pArray array,pUnionNode pNode,Int16 len,Int8*pDest);
+
+typedef struct NodeMsg{
+	
+	Int8 			IPAddress[4];															// ip地址
+	Int8			Net;
+	Int8			SubUni;
+	Int8      Sequence;
+	
+}NodeMsg;
+
+typedef struct LineNode{
+		
+	struct LineNode*pNext;
+	NodeMsg   	msg;
+
+	Int16  	  	len;
+	
+	DATATYPE  	type;
+	DataType* 	Data;
+}LineNode,*pLineNode;
+
+typedef struct ArrayNode{
+	struct ArrayNode*pNext;
+	
+	NodeMsg  	 	msg;
+
+	Int16       len;
+	Int16     	width;
+	Int16 			heigh;
+	
+	DATATYPE		type;																		// 运算的时候，同意用RGB或RGBW运算
+	GetNodeData func;																		// 创建的时候必须指定是哪个类型
+	
+	DataType* 	Src;																		// 矩阵数据指向同一个起始地址
+	DataType*	  Data;																		// Src + offset; offset是计算出来的
+	
+}ArrayNode,*pArrayNode;
+
+typedef union  UnionNode{
+	
+	LineNode  	lineNode;
+	ArrayNode 	arrayNode;
+}UnionNode,*pUnionNode;
+
+// 每一个IP都要专门创建一个
+typedef struct NodeList{
+	
+	struct 		NodeList*pNext;
+	
+	char*				shortName;
+	ARTNETMODE  mode;
+	UnionNode*	pHead;
+	UnionNode*	pTail;
+	
+	pArray		  parray;
+}NodeList,*pNodeList;
+
+
+typedef struct ArtNetConfig{				// 配置列表
+	
+	char*  			longName;
+	ARTNETMODE 	mode;									// Belong to ARTNETMODE_ARRAY OR ARTNETMODE_LINE
+	Int8  			subUni;
+	Int16   		length;
+	DATATYPE  	type;									// DATATYPE_RGB OR OTHRER
+	
+	Int16   		width;
+	Int16   		heigh;
+	
+	ARRAYMODE 	arrayMode;						// 
+	Int16       xStart;
+	Int16       yStart;
+	GetNodeData  getNodeData;
+}ArtNetConfig,*pArtNetConfig;
+
+typedef struct Array{								// 单纯用于计算的数组空间
+
+	Int16				width;
+	Int16				heigh;
+	DATATYPE		type;
+	
+	DataType*   array;								// 一维数组也可以访问二维数组表
+}Array,*pArray;
+
+
+void   				initArtNetConfig(void);
+pArtNetConfig getArtNetConfig(int*size);
+void          registerNodeList(pArtNode  node);												// 在发现设备的时候需要进行登记
+pNodeList     getNodeListHead(void);
+
+pArray				createArray(Int16 width,Int16 height,DATATYPE datatype);// 仅仅用于测试
+
+
+
+
+#endif
+

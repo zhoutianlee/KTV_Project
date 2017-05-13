@@ -1,0 +1,49 @@
+
+
+#ifndef __DISPLAY__H
+#define __DISPLAY__H
+
+typedef enum	 DATATYPE{
+
+	DATATYPE_RGB	=	0,
+	DATATYPE_RGBW	= 1,
+	DATATYPE_GRB	= 2
+	
+}DATATYPE;
+
+typedef struct RGB{
+
+	Int8  	red;
+	Int8  	green;
+	Int8		blue;
+}RGB;
+
+typedef struct RGBW{
+	
+	Int8  	red;
+	Int8  	green;
+	Int8		blue;
+	Int8		white;
+	
+}RGBW;
+
+typedef struct GRB{
+	Int8		green;
+	Int8		red;
+	Int8		white;
+}GRB;
+
+typedef struct Point{
+	Int16		width;
+	Int16 	height;
+}Point;
+
+typedef union  DataType{
+	
+	RGB			rgb;
+	RGBW		rgbw;
+	GRB			grb;
+}DataType;
+
+
+#endif

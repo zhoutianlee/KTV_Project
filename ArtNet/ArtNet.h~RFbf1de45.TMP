@@ -1,0 +1,20 @@
+
+#ifndef __ARTNET__H
+#define __ARTNET__H
+
+#include "includes.h"
+
+#define ARTNET_FREQFLASH					40									// 数据刷新速率
+#define ARTNET_BUFMAX							550
+
+typedef struct ArtNet{
+
+	u8  ID[8];
+	u16 OpCodes;
+	u8  buf[ARTNET_BUFMAX];
+}ArtNet,*pArtNet;
+
+
+void initArtNet(void*parg);
+
+#endif

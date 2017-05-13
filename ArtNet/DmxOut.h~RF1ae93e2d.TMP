@@ -1,0 +1,63 @@
+
+
+#ifndef __DMXOUT__H
+#define __DMXOUT__H
+
+#include "ArtNetType.h"
+
+#define  DMXOUT_NAMESIZE	18
+#define  DMXOUT_DEBUG			1
+
+typedef struct Point{
+	Int16		width;
+	Int16 	height;
+}Point;
+
+typedef struct Point3D{
+	Int16		x;
+	Int16		y;
+	Int16		z;
+}Point3D;
+
+typedef struct Array{
+
+	Int8  	Name[DMXOUT_NAMESIZE];
+	Point3D	point;
+	Int8*** array;
+}Array,*pArray;
+
+typedef  char (*Calculate)(pArray array);
+// 矩阵运算单元
+typedef struct ArrayUnion{
+	Array			array;									// 内存块
+	Calculate	func;										// 运算方法
+	struct 		ArrayUnion*pNext;				// 指向下一块内存
+}ArrayUnion,*pArrayUnion;
+
+typedef struct DmxOut{
+
+	Int8  	Ip[4];
+	Int8  	SubUni;
+	Int8  	Net;
+	Int8  	Sequence;
+	
+	Array		array;
+}DmxOut,*pDmxOut;
+
+typedef struct DmxList{
+
+	struct  DmxList*pNext;
+	DmxOut	object;
+}DmxList,*pDmxList;
+
+
+Int8  		createArray(Int8*Name,Int16 Row,Int16 Column,Int8 Depth);
+pArray		getArray   (Int8 handle);
+char 			freeArray	 (Int8 handle);
+pDmxOut   createDmxOutByHandle(Int8 Ip[4],Int8 SubUni,Int8 Net,
+											 Int8* Name,Int8 Row,Int8 Column,Int8 Depth,Int8 handle);
+pDmxOut		createDmxOutByName(Int8 Ip[4],Int8 SubUni,Int8 Net,
+											 Int8* Name,Int8 Row,Int8 Column,Int8 Depth,Int8*arrayName);
+pDmxList  getDmxListHead(void);
+
+#endif

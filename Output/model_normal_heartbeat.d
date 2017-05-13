@@ -1,0 +1,9 @@
+..\..\output\model_normal_heartbeat.o: ..\..\ArtNet\Model_Normal_HeartBeat.c
+..\..\output\model_normal_heartbeat.o: ..\..\ArtNet\Model_Normal_HeartBeat.h
+..\..\output\model_normal_heartbeat.o: ..\..\ArtNet\model.h
+..\..\output\model_normal_heartbeat.o: ..\..\ArtNet\DmxOut.h
+..\..\output\model_normal_heartbeat.o: ..\..\ArtNet\ArtNetType.h
+..\..\output\model_normal_heartbeat.o: ..\..\ArtNet\ArtMem.h
+..\..\output\model_normal_heartbeat.o: ..\..\ArtNet\Display.h
+..\..\output\model_normal_heartbeat.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\output\model_normal_heartbeat.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

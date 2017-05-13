@@ -1,0 +1,9 @@
+..\..\output\model_normal_soft.o: ..\..\ArtNet\Model_Normal_Soft.c
+..\..\output\model_normal_soft.o: ..\..\ArtNet\Model_Normal_Soft.h
+..\..\output\model_normal_soft.o: ..\..\ArtNet\model.h
+..\..\output\model_normal_soft.o: ..\..\ArtNet\DmxOut.h
+..\..\output\model_normal_soft.o: ..\..\ArtNet\ArtNetType.h
+..\..\output\model_normal_soft.o: ..\..\ArtNet\ArtMem.h
+..\..\output\model_normal_soft.o: ..\..\ArtNet\Display.h
+..\..\output\model_normal_soft.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\output\model_normal_soft.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

@@ -1,0 +1,81 @@
+
+
+#ifndef __DISPLAY__H
+#define __DISPLAY__H
+
+#include "ArtNetType.h"
+
+typedef struct DMXList*pDMXList;
+
+typedef enum	 DATATYPE{
+
+	DATATYPE_RGB	=	0,
+	DATATYPE_RGBW	= 1,
+	DATATYPE_GRB	= 2
+	
+}DATATYPE;
+
+typedef struct RGB{
+
+	Int8  	red;
+	Int8  	green;
+	Int8		blue;
+}RGB;
+
+typedef struct RGBW{
+	
+	Int8  	red;
+	Int8  	green;
+	Int8		blue;
+	Int8		white;
+	
+}RGBW;
+
+typedef struct GRB{
+	Int8		green;
+	Int8		red;
+	Int8		white;
+}GRB;
+
+typedef struct Point{
+	Int16		width;
+	Int16 	height;
+}Point,*pPoint;
+
+typedef union  DataType{
+	
+	RGB			rgb;
+	RGBW		rgbw;
+	GRB			grb;
+}DataType;
+
+typedef struct Array{
+
+	struct 	Array *pNext;							// 用于指向下一块存储空间	
+	Point 			point;
+	DATATYPE		type;
+	
+	pDMXList		phead;								// 用于记录这个矩阵区域的DMX链表
+	DataType*   array;								// 一维数组也可以访问二维数组表
+}Array,*pArray;
+
+typedef struct Triangle{
+	Point				a;
+	Point 			b;
+	Point 			c;
+}Triangle,*pTriangle;
+
+typedef struct Paint{
+	Int8				size;									// 画笔大小
+	Int32				color;								// 颜色
+	Int32				background;						// 背景色
+}Paint,*pPaint;
+
+void    setPaint(pPaint	paint);
+void		drawLine(pArray*array,Point p0,Point p1,Int32 color);
+void    drawTriangle(pArray*array,pTriangle	triangle);
+void    drawTriangleFull(pArray*array,pTriangle triangle);
+void		drawCircle(pArray*array,Point p0,Int16 R);
+void    drawCircleFull(pArray*array,Point p0,Int16 R);
+
+#endif

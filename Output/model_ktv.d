@@ -1,0 +1,12 @@
+..\..\output\model_ktv.o: ..\..\ArtNet\Model_KTV.c
+..\..\output\model_ktv.o: ..\..\ArtNet\Model_KTV.H
+..\..\output\model_ktv.o: ..\..\ArtNet\Model.h
+..\..\output\model_ktv.o: ..\..\ArtNet\DmxOut.h
+..\..\output\model_ktv.o: ..\..\ArtNet\ArtNetType.h
+..\..\output\model_ktv.o: ..\..\ArtNet\ArtMem.h
+..\..\output\model_ktv.o: ..\..\ArtNet\Display.h
+..\..\output\model_ktv.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\output\model_ktv.o: ..\..\ArtNet\Model_KTV_Soft.h
+..\..\output\model_ktv.o: ..\..\ArtNet\Model_KTV_Rythem.h
+..\..\output\model_ktv.o: ..\..\ArtNet\Model_KTV_Romatic.h
+..\..\output\model_ktv.o: ..\..\ArtNet\Model_KTV_Dynamic.h
